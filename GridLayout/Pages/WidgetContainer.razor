@@ -1,0 +1,117 @@
+﻿
+
+
+<div @ref="Ref" style="display: grid; position: relative; grid-template-columns: repeat(@Columns, @ColumnsUnit); grid-template-rows: repeat(@Rows, @RowUnit); gap: @Gap;" dropzone="move">
+    
+    <CascadingValue
+        TValue="WidgetContainer"
+        Value="@this"
+        IsFixed="true">
+        @ChildContent
+    </CascadingValue>
+
+</div>
+
+
+@code {
+    internal ElementReference Ref { get; private set; }
+
+    [Parameter]
+    public int Columns { get; set; } = 12;
+    
+    [Parameter]
+    public string ColumnsUnit { get; set; } = "1fr";
+    
+    [Parameter]
+    public int Rows { get; set; } = 4;
+    
+    [Parameter]
+    public string RowUnit { get; set; } = "100px";
+    
+    [Parameter]
+    public string Gap { get; set; } = "10px";
+    
+    [Parameter]
+    [EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+    
+    private HashSet<Widget> widgets = [];
+
+    public void WidgetCollisionCheck(Widget movedWidget)
+    {
+        foreach (var otherWidget in widgets)
+        {
+            if (otherWidget == movedWidget) continue;
+            if (!IsColliding(movedWidget, otherWidget)) continue;
+
+            // Try positions in this order: up, right, left
+            var positions = new List<(int x, int y)>();
+        
+            // Up positions
+            for (int y = 0; y < Rows - otherWidget.internalHeight; y++)
+            {
+                positions.Add((otherWidget.internalX, y));
+            }
+        
+            // Right positions
+            int rightX = movedWidget.internalX + movedWidget.internalWidth;
+            if (rightX + otherWidget.internalWidth <= Columns)
+            {
+                for (int y = 0; y < Rows - otherWidget.internalHeight; y++)
+                {
+                    positions.Add((rightX, y));
+                }
+            }
+        
+            // Left positions
+            int leftX = movedWidget.internalX - otherWidget.internalWidth;
+            if (leftX >= 0)
+            {
+                for (int y = 0; y < Rows - otherWidget.internalHeight; y++)
+                {
+                    positions.Add((leftX, y));
+                }
+            }
+
+            // Find first non-colliding position
+            foreach (var pos in positions)
+            {
+                bool collides = widgets.Any(w => 
+                    w != otherWidget && 
+                    IsColliding(w, pos.x, pos.y, 
+                    otherWidget.internalWidth, otherWidget.internalHeight));
+                           
+                if (!collides)
+                {
+                    otherWidget.SetNewPosition(pos.x, pos.y);
+                    break;
+                }
+            }
+        }
+    }
+    
+    private bool IsColliding(Widget w1, Widget w2)
+    {
+        return IsColliding(w1, w2.internalX, w2.internalY, 
+        w2.internalWidth, w2.internalHeight);
+    }
+
+    private bool IsColliding(Widget w1, int x2, int y2, int width2, int height2)
+    {
+        return w1.internalX < x2 + width2 &&
+               w1.internalX + w1.internalWidth > x2 &&
+               w1.internalY < y2 + height2 &&
+               w1.internalY + w1.internalHeight > y2;
+    }
+    
+    public void Add(Widget widget)
+    {
+        widgets.Add(widget);
+        WidgetCollisionCheck(widget);
+    }
+    
+    public void Remove(Widget widget)
+    {
+        widgets.Remove(widget);
+    }
+}

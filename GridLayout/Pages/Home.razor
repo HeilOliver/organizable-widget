@@ -1,0 +1,72 @@
+﻿@page "/"
+
+<PageTitle>Test</PageTitle>
+
+<div class="container mt-4">
+    <MudButton
+        OnClick="@Add">
+        Add
+    </MudButton>
+    
+    <MudPaper
+        Outlined="true">
+        <WidgetContainer>
+            @foreach (var item in toDraw)
+            {
+                <Widget
+                    @bind-X="@item.X"
+                    @bind-Y="@item.Y"
+                    Width="3">
+                    <MudPaper
+                        Width="100%"
+                        Height="100%"
+                        Elevation="5"
+                        Class="pa-6 relative">
+                        <MudText
+                            Align="Align.Center"
+                            Typo="Typo.h3">
+                            @item.Id
+                        </MudText>
+                    </MudPaper>
+                </Widget>
+            }
+        </WidgetContainer>
+    </MudPaper>
+</div>
+
+@code {
+    private readonly List<Container> toDraw = [];
+    private int currentIndex;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        toDraw.Add(new Container
+        {
+            Id = $"{currentIndex++}"
+        });
+        
+        toDraw.Add(new Container
+        {
+            Id = $"{currentIndex++}",
+            X = 3
+        });
+    }
+
+    private void Add()
+    {
+        toDraw.Add(new Container
+        {
+            Id = $"{currentIndex++}"
+        });
+    }
+    
+    private class Container
+    {
+        public string Id { get; set; }
+        
+        public int X { get; set; }
+        
+        public int Y { get; set; }
+    }
+}

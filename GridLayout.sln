@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLayout", "GridLayout\GridLayout.csproj", "{FE315D0E-C4E2-42DD-A54F-33A0D8B14518}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE315D0E-C4E2-42DD-A54F-33A0D8B14518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE315D0E-C4E2-42DD-A54F-33A0D8B14518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE315D0E-C4E2-42DD-A54F-33A0D8B14518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE315D0E-C4E2-42DD-A54F-33A0D8B14518}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

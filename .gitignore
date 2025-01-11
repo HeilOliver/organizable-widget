@@ -1,0 +1,76 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio
+.vs/
+*.nupkg
+*.pfx
+*.snk
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Rider
+.idea/
+*.sln.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Blazor
+wwwroot/css/app.css.map
+wwwroot/js/*.js.map
+*.razor.css
+
+# Common IDE & OS files
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
